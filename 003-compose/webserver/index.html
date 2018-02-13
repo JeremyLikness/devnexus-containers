@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>Composed Web Page</title>
+</head>
+
+<body>
+    <h1>JavaScript is Magic!</h1>
+    <canvas id="cvs"></canvas>
+</body>
+<script>
+    const S = Math.sin;
+    const C = Math.cos;
+    const T = Math.tan;
+    const c = document.getElementById("cvs");
+    c.width = 1920;
+    c.height = 1080;
+    const x = c.getContext("2d");
+    const step = 1 / 60;
+    const R = (r, g, b, a) => {
+        a = a === undefined ? 1 : a;
+        return "rgba(" + (r | 0) + "," + (g | 0) + "," + (b | 0) + "," + a + ")";
+    };
+    var t = 0;
+
+    const fn = {
+        run: "console.log('nothing');"
+    };
+
+    const retrieve = () => {
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = () => {
+            if (http.readyState == 4) {
+                fn.run = http.responseText;
+            }
+        };
+        http.open("GET", "http://localhost:8080", true);
+        http.send(null);
+    }
+
+    setInterval(() => {
+        u(t);
+        t += step;
+        retrieve();
+    }, 1000 / 60);
+
+    function u(t) {
+        eval(fn.run);
+    }
+</script>
+
+</html>
