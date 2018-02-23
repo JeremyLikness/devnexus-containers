@@ -2,6 +2,6 @@
 
 ```bash
 docker build -t zork .
-docker images
+docker images | grep "zork"
 docker run -it --name zork zork
 ```
